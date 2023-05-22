@@ -1,2 +1,2 @@
 # poc_plannerbox
-NestJS POC for school project
+NestJS POC to initiate school project
