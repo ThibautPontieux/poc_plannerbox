@@ -1,19 +1,23 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { StagiaireService } from '../service/stagiaire.service';
+import { StagiaireDto } from '../dto/stagiaire.dto';
 
 @Controller('stagiaires')
 export class StagiaireController {
+constructor(private stagiaireService: StagiaireService) {}
+
     @Get()
-    findAll(): string {
-      return 'retourne la liste des stagiaires';
+    findAll(): StagiaireDto[] {
+      return this.stagiaireService.findAll();
     }
   
     @Get(':id')
-    findOne(@Param() params: any): string {
-        return 'retourne un stagiaire avec l\'id ' + params.id;
+    findOne(@Param() params: any): StagiaireDto {
+        return this.stagiaireService.findOne(params.id);
     }
   
     @Post()
-    create(): string {
-        return 'création d\'un stagiaire';
+    create(@Body() stagiaire: StagiaireDto): StagiaireDto {
+        return this.stagiaireService.create(stagiaire);
     }
 }
