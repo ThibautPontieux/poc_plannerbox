@@ -15,6 +15,6 @@ export class StagiaireService {
     }
 
     findOne(id: number): StagiaireDto {
-        return this.stagiaires.find(s => s.id === id);
+        return this.stagiaires.find(s => s.id == id);
     }
 }
