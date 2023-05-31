@@ -1,23 +1,33 @@
-import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { StagiaireService } from '../service/stagiaire.service';
-import { StagiaireDto } from '../dto/stagiaire.dto';
+import { Stagiaire } from '../models/stagiaire.interface';
+import { Observable } from 'rxjs';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Controller('stagiaires')
 export class StagiaireController {
-constructor(private stagiaireService: StagiaireService) {}
+    constructor(private stagiaireService: StagiaireService) {}
+
+    @Post()
+    create(@Body() stagiaire: Stagiaire): Observable<Stagiaire> {
+        return this.stagiaireService.create(stagiaire);
+    }
 
     @Get()
-    findAll(): StagiaireDto[] {
-      return this.stagiaireService.findAll();
+    findAll(): Observable<Stagiaire[]> {
+        return this.stagiaireService.findAll();
     }
-  
-    @Get(':id')
-    findOne(@Param() params: any): StagiaireDto {
-        return this.stagiaireService.findOne(params.id);
+
+    @Put(':id')
+    update(
+        @Param('id') id: number,
+        @Body() stagiaire: Stagiaire
+    ): Observable<UpdateResult> {
+        return this.stagiaireService.update(id, stagiaire);
     }
-  
-    @Post()
-    create(@Body() stagiaire: StagiaireDto): StagiaireDto {
-        return this.stagiaireService.create(stagiaire);
+
+    @Delete(':id')
+    delete(@Param('id') id: number,): Observable<DeleteResult> {
+        return this.stagiaireService.delete(id);
     }
 }
