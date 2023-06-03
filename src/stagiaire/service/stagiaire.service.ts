@@ -2,26 +2,26 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
-import { StagiaireEntity } from '../models/stagiaire.entity';
-import { Stagiaire } from '../models/stagiaire.interface';
+import { Stagiaire } from '../models/stagiaire.entity';
+import { IStagiaire } from '../models/stagiaire.interface';
 import { from, Observable } from 'rxjs';
 
 @Injectable()
 export class StagiaireService {
     constructor(
-        @InjectRepository(StagiaireEntity)
-        private readonly stagiaireRepository: Repository<StagiaireEntity>
+        @InjectRepository(Stagiaire)
+        private readonly stagiaireRepository: Repository<Stagiaire>
     ) {}
 
-    create(stagiaire: Stagiaire): Observable<Stagiaire> {
+    create(stagiaire: IStagiaire): Observable<IStagiaire> {
         return from(this.stagiaireRepository.save(stagiaire));
     }
 
-    findAll(): Observable<Stagiaire[]> {
+    findAll(): Observable<IStagiaire[]> {
         return from(this.stagiaireRepository.find());
     }
 
-    update(id: number, stagiaire: Stagiaire): Observable<UpdateResult> {
+    update(id: number, stagiaire: IStagiaire): Observable<UpdateResult> {
         return from(this.stagiaireRepository.update(id, stagiaire));
     }
 
