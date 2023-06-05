@@ -18,10 +18,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:run": "typeorm -d ./ormconfig.js migration:run",
-    "migration:generate": "typeorm -d ./ormconfig.js migration:generate",
-    "migration:revert": "typeorm -d ./ormconfig.js migration:revert",
-    "migration:create": "cd ./src/migrations && typeorm migration:create"
+    "typeorm": "npx typeorm-ts-node-commonjs",
+    "migration:create": "cd ./src/migrations && typeorm migration:create",
+    "migration:run": "npx typeorm-ts-node-commonjs --dataSource src/config/migration.config.ts migration:run",
+    "migration:generate": "npx typeorm-ts-node-commonjs --dataSource src/config/migration.config.ts migration:generate src/migrations --timestamp",
+    "migration:revert": "npx typeorm-ts-node-commonjs --dataSource src/config/migration.config.ts migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -33,6 +34,7 @@
     "pg": "^8.11.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
+    "sequelize": "^6.32.0",
     "typeorm": "^0.3.16"
   },
   "devDependencies": {
@@ -54,7 +56,7 @@
     "supertest": "^6.1.3",
     "ts-jest": "29.1.0",
     "ts-loader": "^9.2.3",
-    "ts-node": "^10.0.0",
+    "ts-node": "^10.9.1",
     "tsconfig-paths": "4.2.0",
     "typescript": "^5.0.0"
   },
